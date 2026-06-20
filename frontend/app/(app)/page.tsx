@@ -1,9 +1,7 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import { Shield, Plug, AlertTriangle, CheckCircle, Clock, Activity } from "lucide-react";
-import axios from "axios";
-
-const api = axios.create({ baseURL: "/api/v1" });
+import { api } from "@/lib/api";
 
 interface Connector {
   id: string;
@@ -53,9 +51,10 @@ const STATUS_COLOR: Record<string, string> = {
 };
 
 export default function Dashboard() {
-  const { data: connectors = [], isLoading } = useQuery({
+  const { data: connectors = [], isLoading, isError } = useQuery({
     queryKey: ["connectors"],
     queryFn: fetchConnectors,
+    retry: false,
   });
 
   const ready = connectors.filter((c) => c.status === "ready").length;
@@ -63,7 +62,6 @@ export default function Dashboard() {
 
   return (
     <div className="max-w-6xl">
-      {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-white">Dashboard</h1>
         <p style={{ color: "var(--text-muted)" }} className="mt-1">
@@ -71,15 +69,13 @@ export default function Dashboard() {
         </p>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Connectors"       value={connectors.length} icon={Plug}          color="bg-jig-600/20 text-jig-300" />
-        <StatCard label="Actief"           value={ready}             icon={CheckCircle}   color="bg-emerald-900/30 text-emerald-400" />
-        <StatCard label="In behandeling"   value={pending}           icon={Clock}         color="bg-amber-900/30 text-amber-400" />
-        <StatCard label="Hoog risico"      value={0}                 icon={AlertTriangle} color="bg-red-900/30 text-red-400" />
+        <StatCard label="Connectors"     value={connectors.length} icon={Plug}          color="bg-jig-600/20 text-jig-300" />
+        <StatCard label="Actief"         value={ready}             icon={CheckCircle}   color="bg-emerald-900/30 text-emerald-400" />
+        <StatCard label="In behandeling" value={pending}           icon={Clock}         color="bg-amber-900/30 text-amber-400" />
+        <StatCard label="Hoog risico"    value={0}                 icon={AlertTriangle} color="bg-red-900/30 text-red-400" />
       </div>
 
-      {/* Connector list */}
       <div
         className="rounded-xl border overflow-hidden"
         style={{ background: "var(--surface)", borderColor: "var(--border)" }}
@@ -99,6 +95,10 @@ export default function Dashboard() {
             <Activity className="w-6 h-6 mx-auto mb-2 animate-pulse" />
             Laden…
           </div>
+        ) : isError ? (
+          <div className="px-6 py-8 text-center text-red-400 text-sm">
+            Kon data niet ophalen. Probeer de pagina te vernieuwen.
+          </div>
         ) : connectors.length === 0 ? (
           <div className="px-6 py-12 text-center">
             <Plug className="w-8 h-8 mx-auto mb-3" style={{ color: "var(--text-muted)" }} />
@@ -116,7 +116,10 @@ export default function Dashboard() {
         ) : (
           <table className="w-full">
             <thead>
-              <tr className="border-b text-xs uppercase tracking-wider" style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}>
+              <tr
+                className="border-b text-xs uppercase tracking-wider"
+                style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}
+              >
                 <th className="px-6 py-3 text-left">Naam</th>
                 <th className="px-6 py-3 text-left">Type</th>
                 <th className="px-6 py-3 text-left">Status</th>

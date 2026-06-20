@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Shield, Plug, FileText, Settings, Activity, ChevronRight } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Shield, Plug, FileText, Settings, Activity, ChevronRight, LogOut } from "lucide-react";
+import { clearToken } from "@/lib/auth";
 import clsx from "clsx";
 
 const nav = [
@@ -14,6 +15,12 @@ const nav = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  function logout() {
+    clearToken();
+    router.replace("/login");
+  }
 
   return (
     <aside
@@ -56,9 +63,16 @@ export function Sidebar() {
         })}
       </nav>
 
-      {/* Version */}
-      <div className="px-6 py-4 border-t" style={{ borderColor: "var(--border)" }}>
-        <p className="text-xs" style={{ color: "var(--text-muted)" }}>v0.1.0 · MVP</p>
+      {/* Footer */}
+      <div className="px-3 py-3 border-t space-y-1" style={{ borderColor: "var(--border)" }}>
+        <button
+          onClick={logout}
+          className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm transition-colors text-[var(--text-muted)] hover:text-red-400 hover:bg-red-900/10"
+        >
+          <LogOut className="w-4 h-4" />
+          <span>Uitloggen</span>
+        </button>
+        <p className="text-xs px-3" style={{ color: "var(--text-muted)" }}>v0.1.0 · MVP</p>
       </div>
     </aside>
   );
