@@ -8,8 +8,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  BACKEND_IMAGE: ghcr.io/${{ github.repository_owner }}/jig-backend
-  FRONTEND_IMAGE: ghcr.io/${{ github.repository_owner }}/jig-frontend
 
 jobs:
   build-backend:
@@ -19,6 +17,9 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v4
+
+      - name: Lowercase owner
+        run: echo "OWNER=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
 
       - uses: docker/setup-buildx-action@v3
 
@@ -33,7 +34,7 @@ jobs:
         with:
           context: ./backend
           push: ${{ github.event_name == 'push' }}
-          tags: ${{ env.BACKEND_IMAGE }}:latest
+          tags: ghcr.io/${{ env.OWNER }}/jig-backend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -44,6 +45,9 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v4
+
+      - name: Lowercase owner
+        run: echo "OWNER=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
 
       - uses: docker/setup-buildx-action@v3
 
@@ -58,7 +62,7 @@ jobs:
         with:
           context: ./frontend
           push: ${{ github.event_name == 'push' }}
-          tags: ${{ env.FRONTEND_IMAGE }}:latest
+          tags: ghcr.io/${{ env.OWNER }}/jig-frontend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
