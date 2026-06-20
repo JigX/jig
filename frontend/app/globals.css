@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #070f2b;
+  --surface: #0d1b3e;
+  --surface-2: #1a2d5a;
+  --border: rgba(58, 131, 255, 0.15);
+  --text: #e8f0ff;
+  --text-muted: #7a9cc0;
+  --accent: #3a83ff;
+  --accent-glow: rgba(58, 131, 255, 0.25);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* Tier badge colors */
+.tier-allow   { @apply bg-emerald-900/50 text-emerald-300 border border-emerald-700/50; }
+.tier-confirm { @apply bg-amber-900/50 text-amber-300 border border-amber-700/50; }
+.tier-deny    { @apply bg-red-900/50 text-red-300 border border-red-700/50; }
+
+/* Risk colors */
+.risk-low      { @apply text-emerald-400; }
+.risk-medium   { @apply text-amber-400; }
+.risk-high     { @apply text-orange-400; }
+.risk-critical { @apply text-red-400; }
+
+/* Regulation status */
+.status-ok       { @apply text-emerald-400; }
+.status-warning  { @apply text-amber-400; }
+.status-critical { @apply text-red-400; }
