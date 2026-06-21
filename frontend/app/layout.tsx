@@ -1,22 +1,19 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 import { QueryProvider } from "@/components/QueryProvider";
+import enMessages from "../messages/en.json";
 
 export const metadata: Metadata = {
   title: "JIG — AI Governance Platform",
   description: "AI-driven compliance for APIs, SSH and MCP tools",
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const locale = await getLocale();
-  const messages = await getMessages();
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang={locale}>
+    <html lang="en">
       <body className="flex h-screen overflow-hidden">
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale="en" messages={enMessages}>
           <QueryProvider>{children}</QueryProvider>
         </NextIntlClientProvider>
       </body>
