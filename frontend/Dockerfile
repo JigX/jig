@@ -2,8 +2,9 @@ FROM node:22-slim AS base
 WORKDIR /app
 
 FROM base AS deps
+ENV npm_config_update_notifier=false
 COPY package.json package-lock.json* ./
-RUN npm install --frozen-lockfile
+RUN npm install --frozen-lockfile --silent
 
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
