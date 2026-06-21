@@ -23,12 +23,16 @@ export default function LoginPage() {
     setLoading(true);
     setError("");
 
-    const form = new FormData();
-    form.append("username", email);
-    form.append("password", password);
+    const body = new URLSearchParams();
+    body.append("username", email);
+    body.append("password", password);
 
     try {
-      const res = await fetch("/api/v1/auth/login", { method: "POST", body: form });
+      const res = await fetch("/api/v1/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body.toString(),
+      });
       if (res.ok) {
         const data = await res.json();
         setToken(data.access_token);
