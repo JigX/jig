@@ -47,10 +47,60 @@
   "connectors": {
     "title": "Connectors",
     "subtitle": "Beheer je API-, SSH- en MCP-verbindingen",
-    "add": "Connector toevoegen",
+    "addConnector": "Connector toevoegen",
+    "loading": "Connectors laden...",
+    "error": "Kan connectors niet ophalen. Vernieuw de pagina.",
+    "retry": "Opnieuw proberen",
     "empty": {
-      "title": "Geen connectors",
-      "description": "Voeg je eerste connector toe om compliance-analyse te starten."
+      "title": "Nog geen connectors",
+      "subtitle": "Voeg je eerste connector toe om compliance-analyse te starten."
+    },
+    "table": {
+      "name": "Naam",
+      "type": "Type",
+      "status": "Status",
+      "added": "Toegevoegd"
+    },
+    "new": {
+      "title": "Nieuwe connector",
+      "subtitle": "Verbind een systeem met JIG voor governance-analyse",
+      "selectType": "Selecteer connectortype",
+      "types": {
+        "ssh": { "label": "SSH", "description": "Secure Shell toegang tot een server" },
+        "openapi": { "label": "REST / OpenAPI", "description": "HTTP API met OpenAPI-specificatie" },
+        "mcp": { "label": "MCP Server", "description": "Model Context Protocol server" },
+        "graphql": { "label": "GraphQL", "description": "GraphQL API eindpunt" }
+      },
+      "fields": {
+        "name": "Connectornaam",
+        "namePlaceholder": "prod-app-server",
+        "description": "Omschrijving",
+        "descriptionPlaceholder": "Productieapplicatieserver",
+        "host": "Hostnaam of IP",
+        "hostPlaceholder": "192.168.1.10",
+        "port": "Poort",
+        "username": "Gebruikersnaam",
+        "usernamePlaceholder": "deploy",
+        "authMethod": "Authenticatiemethode",
+        "authKey": "SSH-sleutel (K8s secret-referentie)",
+        "authPassword": "Wachtwoord (K8s secret-referentie)",
+        "keySecretRef": "K8s secret-naam",
+        "keySecretRefPlaceholder": "jig-ssh-key-prod",
+        "jumpHost": "Jump host (optioneel)",
+        "jumpHostPlaceholder": "bastion.voorbeeld.nl"
+      },
+      "submit": "Connector toevoegen",
+      "submitting": "Toevoegen...",
+      "error": "Kan connector niet aanmaken."
+    },
+    "detail": {
+      "config": "Configuratie",
+      "status": "Status",
+      "delete": "Connector verwijderen",
+      "deleteConfirm": "Weet je zeker dat je deze connector wilt verwijderen?",
+      "deleting": "Verwijderen...",
+      "deleteError": "Kan connector niet verwijderen.",
+      "notFound": "Connector niet gevonden."
     }
   },
   "policies": {

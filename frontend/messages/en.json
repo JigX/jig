@@ -47,10 +47,60 @@
   "connectors": {
     "title": "Connectors",
     "subtitle": "Manage your API, SSH and MCP connections",
-    "add": "Add connector",
+    "addConnector": "Add connector",
+    "loading": "Loading connectors...",
+    "error": "Failed to load connectors. Please refresh.",
+    "retry": "Retry",
     "empty": {
-      "title": "No connectors",
-      "description": "Add your first connector to start analysing compliance."
+      "title": "No connectors yet",
+      "subtitle": "Add your first connector to start analysing compliance."
+    },
+    "table": {
+      "name": "Name",
+      "type": "Type",
+      "status": "Status",
+      "added": "Added"
+    },
+    "new": {
+      "title": "New connector",
+      "subtitle": "Connect a system to JIG for governance analysis",
+      "selectType": "Select connector type",
+      "types": {
+        "ssh": { "label": "SSH", "description": "Secure Shell access to a server" },
+        "openapi": { "label": "REST / OpenAPI", "description": "HTTP API with OpenAPI spec" },
+        "mcp": { "label": "MCP Server", "description": "Model Context Protocol server" },
+        "graphql": { "label": "GraphQL", "description": "GraphQL API endpoint" }
+      },
+      "fields": {
+        "name": "Connector name",
+        "namePlaceholder": "prod-app-server",
+        "description": "Description",
+        "descriptionPlaceholder": "Production application server",
+        "host": "Hostname or IP",
+        "hostPlaceholder": "192.168.1.10",
+        "port": "Port",
+        "username": "Username",
+        "usernamePlaceholder": "deploy",
+        "authMethod": "Authentication method",
+        "authKey": "SSH key (K8s secret reference)",
+        "authPassword": "Password (K8s secret reference)",
+        "keySecretRef": "K8s secret name",
+        "keySecretRefPlaceholder": "jig-ssh-key-prod",
+        "jumpHost": "Jump host (optional)",
+        "jumpHostPlaceholder": "bastion.example.com"
+      },
+      "submit": "Add connector",
+      "submitting": "Adding...",
+      "error": "Failed to create connector."
+    },
+    "detail": {
+      "config": "Configuration",
+      "status": "Status",
+      "delete": "Delete connector",
+      "deleteConfirm": "Are you sure you want to delete this connector?",
+      "deleting": "Deleting...",
+      "deleteError": "Failed to delete connector.",
+      "notFound": "Connector not found."
     }
   },
   "policies": {

@@ -59,10 +59,20 @@ export function useLocale() {
   return { locale: ctx.locale, setLocale: ctx.setLocale };
 }
 
+function getNestedObject(obj: NestedValue, path: string): NestedValue {
+  const parts = path.split(".");
+  let current: NestedValue = obj;
+  for (const part of parts) {
+    if (typeof current !== "object" || current === null) return {};
+    current = current[part];
+  }
+  return typeof current === "object" && current !== null ? current : {};
+}
+
 export function useTranslations(namespace: string) {
   const ctx = useContext(Ctx);
   const msgs = ctx?.messages ?? ({} as Messages);
-  const ns = (msgs as NestedValue)[namespace] ?? {};
+  const ns = getNestedObject(msgs, namespace);
 
   return function t(key: string): string {
     return getNestedValue(ns, key) ?? key;
