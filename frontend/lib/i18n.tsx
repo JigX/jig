@@ -5,14 +5,15 @@ import type enMessages from "../messages/en.json";
 type Messages = typeof enMessages;
 type Locale = "en" | "nl";
 
-type NestedValue = string | Record<string, NestedValue>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type NestedValue = any;
 
-function getNestedValue(obj: Record<string, NestedValue>, path: string): string {
+function getNestedValue(obj: NestedValue, path: string): string {
   const parts = path.split(".");
   let current: NestedValue = obj;
   for (const part of parts) {
     if (typeof current !== "object" || current === null) return path;
-    current = (current as Record<string, NestedValue>)[part];
+    current = current[part];
   }
   return typeof current === "string" ? current : path;
 }
@@ -61,7 +62,7 @@ export function useLocale() {
 export function useTranslations(namespace: string) {
   const ctx = useContext(Ctx);
   const msgs = ctx?.messages ?? ({} as Messages);
-  const ns = (msgs as Record<string, NestedValue>)[namespace] as Record<string, NestedValue> ?? {};
+  const ns = (msgs as NestedValue)[namespace] ?? {};
 
   return function t(key: string): string {
     return getNestedValue(ns, key) ?? key;
