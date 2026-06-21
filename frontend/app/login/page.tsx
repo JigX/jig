@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "@/lib/i18n";
 import { Shield, Loader2 } from "lucide-react";
 import { setToken, getToken } from "@/lib/auth";
 

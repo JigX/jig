@@ -1,6 +1,6 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "@/lib/i18n";
 import { Users, UserPlus, Shield, Eye } from "lucide-react";
 import { api } from "@/lib/api";
 

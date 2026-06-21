@@ -1,5 +1,5 @@
 "use client";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "@/lib/i18n";
 import { Shield, Users, Activity, ArrowRight } from "lucide-react";
 import Link from "next/link";
 

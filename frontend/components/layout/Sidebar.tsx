@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "@/lib/i18n";
 import { Shield, Plug, FileText, Settings, Activity, ChevronRight, LogOut, ShieldCheck } from "lucide-react";
 import clsx from "clsx";
 import { clearToken } from "@/lib/auth";

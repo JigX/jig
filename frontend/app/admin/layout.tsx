@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "@/lib/i18n";
 import { Shield, Users, Settings, LayoutDashboard } from "lucide-react";
 import clsx from "clsx";
 
