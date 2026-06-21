@@ -10,6 +10,14 @@ on:
     branches: [main, develop]
     paths:
       - 'backend/**'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Image tag (latest / staging)'
+        required: true
+        default: staging
+        type: choice
+        options: [latest, staging]
 
 env:
   REGISTRY: ghcr.io
@@ -27,7 +35,9 @@ jobs:
 
       - name: Set image tag
         run: |
-          if [ "${{ github.ref_name }}" = "main" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "IMAGE_TAG=${{ inputs.tag }}" >> $GITHUB_ENV
+          elif [ "${{ github.ref_name }}" = "main" ]; then
             echo "IMAGE_TAG=latest" >> $GITHUB_ENV
           else
             echo "IMAGE_TAG=staging" >> $GITHUB_ENV
@@ -36,7 +46,6 @@ jobs:
       - uses: docker/setup-buildx-action@v4
 
       - uses: docker/login-action@v4
-        if: github.event_name == 'push'
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -45,13 +54,12 @@ jobs:
       - uses: docker/build-push-action@v6
         with:
           context: ./backend
-          push: ${{ github.event_name == 'push' }}
+          push: true
           tags: ${{ env.IMAGE }}:${{ env.IMAGE_TAG }}
           cache-from: type=registry,ref=${{ env.IMAGE }}:buildcache
-          cache-to: ${{ github.event_name == 'push' && format('type=registry,ref={0}:buildcache,mode=max', env.IMAGE) || '' }}
+          cache-to: type=registry,ref=${{ env.IMAGE }}:buildcache,mode=max
 
       - name: Deploy to cluster
-        if: github.event_name == 'push'
         env:
           KUBECONFIG_DATA: ${{ secrets.KUBECONFIG_DATA }}
         run: |
@@ -59,7 +67,7 @@ jobs:
             echo "KUBECONFIG_DATA secret not set, skipping auto-deploy"
             exit 0
           fi
-          NAMESPACE=$([[ "${{ github.ref_name }}" == "main" ]] && echo "jig" || echo "jig-staging")
+          if [ "${{ env.IMAGE_TAG }}" = "latest" ]; then NAMESPACE=jig; else NAMESPACE=jig-staging; fi
           mkdir -p ~/.kube
           echo "$KUBECONFIG_DATA" | base64 -d > ~/.kube/config
           kubectl rollout restart deployment/jig-backend -n $NAMESPACE
