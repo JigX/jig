@@ -1,0 +1,160 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "connectors": "Connectors",
+    "policies": "Policies",
+    "auditLog": "Audit Log",
+    "settings": "Settings",
+    "admin": "Admin",
+    "signOut": "Sign out"
+  },
+  "login": {
+    "title": "Sign in",
+    "subtitle": "AI Governance Platform",
+    "email": "Email address",
+    "password": "Password",
+    "emailPlaceholder": "you@company.com",
+    "submit": "Sign in",
+    "submitting": "Signing in...",
+    "invalidCredentials": "Invalid email address or password",
+    "networkError": "Connection error. Please try again.",
+    "noAccount": "No account? Contact your administrator."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "AI-driven compliance overview for all your connections",
+    "stats": {
+      "connectors": "Connectors",
+      "active": "Active",
+      "pending": "Pending",
+      "highRisk": "High Risk"
+    },
+    "recentConnectors": "Recent connectors",
+    "viewAll": "View all →",
+    "loading": "Loading...",
+    "error": "Failed to load data. Please refresh the page.",
+    "empty": {
+      "title": "No connectors yet",
+      "description": "Add your first API, SSH or MCP server to get started.",
+      "action": "+ Add connector"
+    },
+    "table": {
+      "name": "Name",
+      "type": "Type",
+      "status": "Status"
+    }
+  },
+  "connectors": {
+    "title": "Connectors",
+    "subtitle": "Manage your API, SSH and MCP connections",
+    "add": "Add connector",
+    "empty": {
+      "title": "No connectors",
+      "description": "Add your first connector to start analysing compliance."
+    }
+  },
+  "policies": {
+    "title": "Policies",
+    "subtitle": "Configure per-capability access controls"
+  },
+  "audit": {
+    "title": "Audit Log",
+    "subtitle": "Immutable log of all MCP tool calls"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Account and platform preferences",
+    "language": {
+      "title": "Language",
+      "description": "Choose the display language for the interface",
+      "en": "English",
+      "nl": "Dutch"
+    }
+  },
+  "admin": {
+    "title": "Admin",
+    "subtitle": "Platform configuration and user management",
+    "nav": {
+      "overview": "Overview",
+      "auth": "Authentication",
+      "users": "Users",
+      "system": "System"
+    },
+    "auth": {
+      "title": "Authentication Providers",
+      "description": "Configure how users sign in to JIG. Only one provider can be active at a time.",
+      "active": "Active",
+      "configure": "Configure",
+      "save": "Save configuration",
+      "saving": "Saving...",
+      "saved": "Configuration saved",
+      "providers": {
+        "local": {
+          "name": "Local",
+          "description": "Username and password stored in the JIG database. Suitable for development and small teams."
+        },
+        "azure": {
+          "name": "Azure AD / Entra ID",
+          "description": "Microsoft identity platform. Recommended for CRV production use.",
+          "tenantId": "Tenant ID",
+          "clientId": "Client ID",
+          "clientSecret": "Client Secret",
+          "tenantIdPlaceholder": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+          "clientIdPlaceholder": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+        },
+        "authentik": {
+          "name": "Authentik",
+          "description": "Self-hosted identity provider, already deployed in the Quantika cluster.",
+          "baseUrl": "Authentik URL",
+          "clientId": "Client ID",
+          "clientSecret": "Client Secret",
+          "baseUrlPlaceholder": "https://auth.indeweygerlings.com"
+        }
+      }
+    },
+    "users": {
+      "title": "Users",
+      "description": "Manage who has access to JIG",
+      "invite": "Invite user",
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "created": "Created",
+        "actions": "Actions"
+      },
+      "roles": {
+        "admin": "Admin",
+        "viewer": "Viewer"
+      },
+      "empty": {
+        "title": "No users found",
+        "description": "Invite users to grant them access to JIG."
+      }
+    },
+    "system": {
+      "title": "System",
+      "version": "Version",
+      "aiProvider": "AI Provider",
+      "database": "Database"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "appName": "JIG",
+    "appTagline": "AI Governance",
+    "version": "v0.1.0 · MVP"
+  },
+  "status": {
+    "ready": "Ready",
+    "analyzing": "Analyzing",
+    "pending": "Pending",
+    "error": "Error"
+  }
+}

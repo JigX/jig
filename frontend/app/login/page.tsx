@@ -1,11 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Shield, Loader2 } from "lucide-react";
 import { setToken, getToken } from "@/lib/auth";
 
 export default function LoginPage() {
   const router = useRouter();
+  const t = useTranslations("login");
+  const tc = useTranslations("common");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -31,10 +34,10 @@ export default function LoginPage() {
         setToken(data.access_token);
         router.replace("/");
       } else {
-        setError("Ongeldig e-mailadres of wachtwoord");
+        setError(t("invalidCredentials"));
       }
     } catch {
-      setError("Verbindingsfout. Probeer opnieuw.");
+      setError(t("networkError"));
     } finally {
       setLoading(false);
     }
@@ -43,24 +46,22 @@ export default function LoginPage() {
   return (
     <div className="flex flex-1 items-center justify-center min-h-screen" style={{ background: "var(--bg)" }}>
       <div className="w-full max-w-sm px-4">
-        {/* Logo */}
         <div className="flex items-center gap-3 justify-center mb-8">
           <div className="w-10 h-10 rounded-xl bg-jig-500 flex items-center justify-center">
             <Shield className="w-5 h-5 text-white" />
           </div>
           <div>
-            <p className="font-bold text-white text-xl tracking-wide">JIG</p>
-            <p className="text-xs" style={{ color: "var(--text-muted)" }}>AI Governance Platform</p>
+            <p className="font-bold text-white text-xl tracking-wide">{tc("appName")}</p>
+            <p className="text-xs" style={{ color: "var(--text-muted)" }}>{t("subtitle")}</p>
           </div>
         </div>
 
-        {/* Card */}
         <div className="rounded-xl border p-6" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
-          <h1 className="text-white font-semibold text-lg mb-6">Inloggen</h1>
+          <h1 className="text-white font-semibold text-lg mb-6">{t("title")}</h1>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm mb-1.5" style={{ color: "var(--text-muted)" }}>
-                E-mailadres
+                {t("email")}
               </label>
               <input
                 type="email"
@@ -68,14 +69,14 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-3 py-2 rounded-lg text-sm text-white outline-none focus:ring-1 focus:ring-jig-400"
                 style={{ background: "var(--surface-2)", border: "1px solid var(--border)" }}
-                placeholder="jeffrey@crv4all.com"
+                placeholder={t("emailPlaceholder")}
                 autoComplete="email"
                 required
               />
             </div>
             <div>
               <label className="block text-sm mb-1.5" style={{ color: "var(--text-muted)" }}>
-                Wachtwoord
+                {t("password")}
               </label>
               <input
                 type="password"
@@ -102,17 +103,17 @@ export default function LoginPage() {
               {loading ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  Bezig…
+                  {t("submitting")}
                 </>
               ) : (
-                "Inloggen"
+                t("submit")
               )}
             </button>
           </form>
         </div>
 
         <p className="text-center text-xs mt-6" style={{ color: "var(--text-muted)" }}>
-          Geen account? Vraag toegang aan bij de beheerder.
+          {t("noAccount")}
         </p>
       </div>
     </div>

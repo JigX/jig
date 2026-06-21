@@ -1,0 +1,160 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "connectors": "Connectors",
+    "policies": "Beleid",
+    "auditLog": "Auditlog",
+    "settings": "Instellingen",
+    "admin": "Beheer",
+    "signOut": "Uitloggen"
+  },
+  "login": {
+    "title": "Inloggen",
+    "subtitle": "AI Governance Platform",
+    "email": "E-mailadres",
+    "password": "Wachtwoord",
+    "emailPlaceholder": "jij@bedrijf.nl",
+    "submit": "Inloggen",
+    "submitting": "Bezig...",
+    "invalidCredentials": "Ongeldig e-mailadres of wachtwoord",
+    "networkError": "Verbindingsfout. Probeer opnieuw.",
+    "noAccount": "Geen account? Vraag toegang aan bij de beheerder."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "AI-gedreven compliance overzicht voor al je verbindingen",
+    "stats": {
+      "connectors": "Connectors",
+      "active": "Actief",
+      "pending": "In behandeling",
+      "highRisk": "Hoog risico"
+    },
+    "recentConnectors": "Recente connectors",
+    "viewAll": "Alles bekijken →",
+    "loading": "Laden...",
+    "error": "Kon data niet ophalen. Probeer de pagina te vernieuwen.",
+    "empty": {
+      "title": "Nog geen connectors",
+      "description": "Voeg je eerste API, SSH of MCP server toe om te beginnen.",
+      "action": "+ Connector toevoegen"
+    },
+    "table": {
+      "name": "Naam",
+      "type": "Type",
+      "status": "Status"
+    }
+  },
+  "connectors": {
+    "title": "Connectors",
+    "subtitle": "Beheer je API-, SSH- en MCP-verbindingen",
+    "add": "Connector toevoegen",
+    "empty": {
+      "title": "Geen connectors",
+      "description": "Voeg je eerste connector toe om compliance-analyse te starten."
+    }
+  },
+  "policies": {
+    "title": "Beleid",
+    "subtitle": "Configureer per-capability toegangscontroles"
+  },
+  "audit": {
+    "title": "Auditlog",
+    "subtitle": "Onveranderlijk logboek van alle MCP-toolaanroepen"
+  },
+  "settings": {
+    "title": "Instellingen",
+    "subtitle": "Account- en platformvoorkeuren",
+    "language": {
+      "title": "Taal",
+      "description": "Kies de weergavetaal voor de interface",
+      "en": "Engels",
+      "nl": "Nederlands"
+    }
+  },
+  "admin": {
+    "title": "Beheer",
+    "subtitle": "Platformconfiguratie en gebruikersbeheer",
+    "nav": {
+      "overview": "Overzicht",
+      "auth": "Authenticatie",
+      "users": "Gebruikers",
+      "system": "Systeem"
+    },
+    "auth": {
+      "title": "Authenticatieproviders",
+      "description": "Stel in hoe gebruikers inloggen bij JIG. Slechts één provider tegelijk actief.",
+      "active": "Actief",
+      "configure": "Configureren",
+      "save": "Configuratie opslaan",
+      "saving": "Opslaan...",
+      "saved": "Configuratie opgeslagen",
+      "providers": {
+        "local": {
+          "name": "Lokaal",
+          "description": "Gebruikersnaam en wachtwoord opgeslagen in de JIG-database. Geschikt voor ontwikkeling en kleine teams."
+        },
+        "azure": {
+          "name": "Azure AD / Entra ID",
+          "description": "Microsoft identiteitsplatform. Aanbevolen voor CRV-productiegebruik.",
+          "tenantId": "Tenant-ID",
+          "clientId": "Client-ID",
+          "clientSecret": "Clientgeheim",
+          "tenantIdPlaceholder": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+          "clientIdPlaceholder": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+        },
+        "authentik": {
+          "name": "Authentik",
+          "description": "Zelfgehoste identiteitsprovider, al gedeployed in het Quantika-cluster.",
+          "baseUrl": "Authentik URL",
+          "clientId": "Client-ID",
+          "clientSecret": "Clientgeheim",
+          "baseUrlPlaceholder": "https://auth.indeweygerlings.com"
+        }
+      }
+    },
+    "users": {
+      "title": "Gebruikers",
+      "description": "Beheer wie toegang heeft tot JIG",
+      "invite": "Gebruiker uitnodigen",
+      "table": {
+        "name": "Naam",
+        "email": "E-mail",
+        "role": "Rol",
+        "created": "Aangemaakt",
+        "actions": "Acties"
+      },
+      "roles": {
+        "admin": "Beheerder",
+        "viewer": "Kijker"
+      },
+      "empty": {
+        "title": "Geen gebruikers gevonden",
+        "description": "Nodig gebruikers uit om hen toegang te geven tot JIG."
+      }
+    },
+    "system": {
+      "title": "Systeem",
+      "version": "Versie",
+      "aiProvider": "AI-provider",
+      "database": "Database"
+    }
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Er is iets misgegaan",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "back": "Terug",
+    "appName": "JIG",
+    "appTagline": "AI Governance",
+    "version": "v0.1.0 · MVP"
+  },
+  "status": {
+    "ready": "Gereed",
+    "analyzing": "Analyseren",
+    "pending": "In behandeling",
+    "error": "Fout"
+  }
+}
