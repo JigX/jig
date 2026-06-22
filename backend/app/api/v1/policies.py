@@ -10,7 +10,37 @@ from app.models.capability import Capability
 from app.models.policy import Policy, PolicyTier
 from app.models.user import User
 
+RISK_SCORE: dict = {
+    "low": 2, "medium": 5, "high": 8, "critical": 10,
+}
+
 router = APIRouter()
+
+
+@router.get("/")
+async def list_all_policies(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    _: Annotated[User, Depends(get_current_user)],
+) -> list[dict]:
+    from app.models.connector import Connector
+    result = await db.execute(
+        select(Policy, Capability, Connector)
+        .join(Capability, Policy.capability_id == Capability.id)
+        .join(Connector, Capability.connector_id == Connector.id)
+        .order_by(Capability.risk_level.desc())
+    )
+    rows = result.all()
+    return [
+        {
+            "id": str(p.id),
+            "capability_name": c.name,
+            "connector_name": conn.name,
+            "connector_id": str(conn.id),
+            "decision": p.tier.value,
+            "risk_score": RISK_SCORE.get(c.risk_level.value, 5),
+        }
+        for p, c, conn in rows
+    ]
 
 
 @router.get("/connector/{connector_id}")
