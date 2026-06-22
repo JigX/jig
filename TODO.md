@@ -9,9 +9,9 @@
 
 ## Frontend — pagina's bouwen
 
-- [ ] `/policies` pagina — lijst + nieuw beleid formulier
-- [ ] `/settings` pagina — taalwissel, accountinstellingen
-- [ ] `/audit` pagina — auditlog tabel
+- [x] `/policies` pagina — lijst + nieuw beleid formulier
+- [x] `/settings` pagina — taalwissel, accountinstellingen
+- [x] `/audit` pagina — auditlog tabel
 - [ ] Dashboard stats koppelen aan echte data (nu hardcoded 0 voor High Risk)
 
 ---
@@ -22,7 +22,7 @@
 - [ ] **Leesbare veldlabels in formulieren** — `fields.name`, `fields.host` etc. zijn inmiddels vertaald maar doorloop alle formulieren en controleer of alles klopt in NL én EN
 - [ ] **Engelstalige placeholders** — alle placeholder-teksten controleren op leesbaarheid (bijv. `namePlaceholder`, `hostPlaceholder`)
 - [ ] Connector detail pagina — `description` en `updated_at` toevoegen aan backend response
-- [ ] Connector type labels in tabel leesbaar maken (nu `SSH`, `OPENAPI` — bijv. `REST / OpenAPI`)
+- [x] Connector type labels in tabel leesbaar maken (`REST / OpenAPI`, `MCP Server` etc.)
 
 ---
 
