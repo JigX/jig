@@ -105,11 +105,33 @@
   },
   "policies": {
     "title": "Beleid",
-    "subtitle": "Configureer per-capability toegangscontroles"
+    "subtitle": "Configureer per-capability toegangscontroles",
+    "empty": {
+      "title": "Nog geen beleid",
+      "subtitle": "Voeg een connector toe en voer een analyse uit om beleid aan te maken.",
+      "action": "Connector toevoegen"
+    },
+    "table": {
+      "capability": "Capability",
+      "connector": "Connector",
+      "risk": "Risico",
+      "decision": "Beslissing"
+    }
   },
   "audit": {
     "title": "Auditlog",
-    "subtitle": "Onveranderlijk logboek van alle MCP-toolaanroepen"
+    "subtitle": "Onveranderlijk logboek van alle beheerde toolaanroepen",
+    "empty": {
+      "title": "Nog geen auditregels",
+      "subtitle": "Beheerde toolaanroepen verschijnen hier zodra connectors actief zijn."
+    },
+    "table": {
+      "time": "Tijdstip",
+      "connector": "Connector",
+      "capability": "Capability",
+      "actor": "Actor",
+      "outcome": "Uitkomst"
+    }
   },
   "settings": {
     "title": "Instellingen",

@@ -105,11 +105,33 @@
   },
   "policies": {
     "title": "Policies",
-    "subtitle": "Configure per-capability access controls"
+    "subtitle": "Configure per-capability access controls",
+    "empty": {
+      "title": "No policies yet",
+      "subtitle": "Add a connector and run an analysis to generate policies.",
+      "action": "Add connector"
+    },
+    "table": {
+      "capability": "Capability",
+      "connector": "Connector",
+      "risk": "Risk",
+      "decision": "Decision"
+    }
   },
   "audit": {
     "title": "Audit Log",
-    "subtitle": "Immutable log of all MCP tool calls"
+    "subtitle": "Immutable log of all governed tool calls",
+    "empty": {
+      "title": "No audit entries yet",
+      "subtitle": "Governed tool calls will appear here once connectors are active."
+    },
+    "table": {
+      "time": "Timestamp",
+      "connector": "Connector",
+      "capability": "Capability",
+      "actor": "Actor",
+      "outcome": "Outcome"
+    }
   },
   "settings": {
     "title": "Settings",

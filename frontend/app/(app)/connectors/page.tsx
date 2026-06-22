@@ -29,6 +29,14 @@ const TYPE_COLOR: Record<string, string> = {
   graphql:  "bg-pink-900/30 text-pink-400",
 };
 
+const TYPE_LABEL: Record<string, string> = {
+  ssh:      "SSH",
+  openapi:  "REST / OpenAPI",
+  mcp:      "MCP Server",
+  graphql:  "GraphQL",
+  database: "Database",
+};
+
 const STATUS_ICON: Record<string, React.ElementType> = {
   ready: CheckCircle, analyzing: Clock, error: AlertTriangle, pending: Clock,
 };
@@ -125,7 +133,7 @@ export default function ConnectorsPage() {
                     <td className="px-6 py-4">
                       <span className={`inline-flex items-center gap-1.5 text-xs px-2 py-1 rounded-full ${TYPE_COLOR[c.type] ?? "bg-white/5 text-slate-400"}`}>
                         <TypeIcon className="w-3 h-3" />
-                        {c.type.toUpperCase()}
+                        {TYPE_LABEL[c.type] ?? c.type.toUpperCase()}
                       </span>
                     </td>
                     <td className="px-6 py-4">
