@@ -19,7 +19,7 @@ async function fetchUsers(): Promise<User[]> {
 
 export default function UsersAdmin() {
   const t = useTranslations("admin.users");
-  const { data: users = [], isLoading } = useQuery({
+  const { data: users = [], isLoading, isError, error } = useQuery({
     queryKey: ["admin-users"],
     queryFn: fetchUsers,
     retry: false,
@@ -42,6 +42,12 @@ export default function UsersAdmin() {
         {isLoading ? (
           <div className="px-6 py-8 text-center text-sm" style={{ color: "var(--text-muted)" }}>
             Loading...
+          </div>
+        ) : isError ? (
+          <div className="px-6 py-8 text-center text-sm text-red-400">
+            {(error as { response?: { status?: number } })?.response?.status === 403
+              ? "You need admin rights to view users."
+              : "Failed to load users. Please refresh."}
           </div>
         ) : users.length === 0 ? (
           <div className="px-6 py-12 text-center">

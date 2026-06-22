@@ -46,6 +46,10 @@
 
 ## Later / nice-to-have
 
+- [ ] **Groepen / granulaire rechten** — nu is het `is_admin: bool` (admin vs viewer). Groepen met specifieke permissions (bijv. connector-beheer, policy-beheer, read-only) vereist: `Group` model, user-group koppeltabel, permission checks per endpoint. Doen zodra duidelijk is welke rollen CRV-collega's nodig hebben.
+
+
+
 - [ ] Language switcher in `/settings` koppelen (backend `locale` preference opslaan)
 - [ ] Azure AD / Authentik SSO koppelen (admin → auth pagina)
 - [ ] DB connector type toevoegen
