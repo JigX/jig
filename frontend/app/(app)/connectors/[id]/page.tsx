@@ -7,14 +7,17 @@ import { api } from "@/lib/api";
 import {
   Terminal, Globe, Server, Database, Plug, CheckCircle, Clock,
   AlertTriangle, ChevronLeft, Trash2, Plus, X, ShieldCheck,
-  ShieldAlert, ShieldOff,
+  ShieldAlert, ShieldOff, KeyRound, Eye, EyeOff,
 } from "lucide-react";
 
 interface Connector {
   id: string; name: string; description?: string;
-  type: string; status: string; config: Record<string, unknown>;
+  type: string; status: string; auth_mode: string;
+  config: Record<string, unknown>;
   created_at: string; updated_at: string;
 }
+
+interface MyCredential { has_credential: boolean; updated_at: string | null; }
 
 interface Capability {
   id: string; name: string; description?: string;
@@ -74,11 +77,34 @@ export default function ConnectorDetailPage() {
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState(EMPTY_FORM);
   const [params, setParams] = useState<Param[]>([]);
+  const [credInput, setCredInput] = useState("");
+  const [showCred, setShowCred] = useState(false);
 
   const { data: connector, isLoading, isError } = useQuery<Connector>({
     queryKey: ["connectors", id],
     queryFn: async () => (await api.get(`/connectors/${id}/`)).data,
     retry: false,
+  });
+
+  const { data: myCred, refetch: refetchCred } = useQuery<MyCredential>({
+    queryKey: ["my-credential", id],
+    queryFn: async () => (await api.get(`/connectors/${id}/my-credential/`)).data,
+    enabled: !!id,
+  });
+
+  const saveCredMutation = useMutation({
+    mutationFn: () => api.put(`/connectors/${id}/my-credential/`, { credential: credInput }),
+    onSuccess: () => { setCredInput(""); refetchCred(); },
+  });
+
+  const deleteCredMutation = useMutation({
+    mutationFn: () => api.delete(`/connectors/${id}/my-credential/`),
+    onSuccess: () => refetchCred(),
+  });
+
+  const setAuthMode = useMutation({
+    mutationFn: (mode: string) => api.patch(`/connectors/${id}/auth-mode/`, { auth_mode: mode }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["connectors", id] }),
   });
 
   const { data: capabilities = [] } = useQuery<Capability[]>({
@@ -171,6 +197,78 @@ export default function ConnectorDetailPage() {
             </div>
           ))}
         </dl>
+      </div>
+
+      {/* Auth mode + My credential */}
+      <div className="rounded-xl border mb-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+        <div className="px-5 py-3 border-b flex items-center justify-between" style={{ borderColor: "var(--border)" }}>
+          <div className="flex items-center gap-2">
+            <KeyRound className="w-4 h-4 text-jig-400" />
+            <h2 className="text-sm font-semibold text-white">{t("credential.title")}</h2>
+          </div>
+          <div className="flex items-center gap-1 rounded-lg p-0.5" style={{ background: "var(--surface-raised)" }}>
+            {["global", "per_user"].map(mode => (
+              <button key={mode}
+                onClick={() => setAuthMode.mutate(mode)}
+                className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
+                  connector?.auth_mode === mode ? "bg-jig-600 text-white" : "text-slate-400 hover:text-white"
+                }`}>
+                {mode === "global" ? t("credential.modeGlobal") : t("credential.modePerUser")}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {connector?.auth_mode === "global" ? (
+          <p className="px-5 py-4 text-sm" style={{ color: "var(--text-muted)" }}>
+            {t("credential.globalNote")}
+          </p>
+        ) : (
+          <div className="px-5 py-4 space-y-3">
+            {myCred?.has_credential ? (
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-emerald-400 font-medium">{t("credential.set")}</p>
+                  {myCred.updated_at && (
+                    <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                      {t("credential.updated")} {new Date(myCred.updated_at).toLocaleString()}
+                    </p>
+                  )}
+                </div>
+                <button onClick={() => window.confirm(t("credential.deleteConfirm")) && deleteCredMutation.mutate()}
+                  className="text-sm text-red-400 hover:text-red-300 transition-colors">
+                  {t("credential.delete")}
+                </button>
+              </div>
+            ) : (
+              <p className="text-sm text-amber-400">{t("credential.notSet")}</p>
+            )}
+
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <input
+                  type={showCred ? "text" : "password"}
+                  value={credInput}
+                  onChange={e => setCredInput(e.target.value)}
+                  placeholder={t("credential.placeholder")}
+                  className="w-full rounded-lg px-3 py-2 text-sm text-white pr-10"
+                  style={{ background: "var(--surface-raised)", border: "1px solid var(--border)" }}
+                />
+                <button onClick={() => setShowCred(s => !s)}
+                  className="absolute right-3 top-2.5 text-slate-500 hover:text-slate-300">
+                  {showCred ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+              <button
+                onClick={() => saveCredMutation.mutate()}
+                disabled={!credInput || saveCredMutation.isPending}
+                className="px-4 py-2 rounded-lg text-sm font-medium text-white bg-jig-600 hover:bg-jig-500 disabled:opacity-50 transition-colors"
+              >
+                {saveCredMutation.isPending ? tc("loading") : tc("save")}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Capabilities */}

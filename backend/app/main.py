@@ -9,6 +9,10 @@ from app.core.config import settings
 from app.core.database import engine, Base
 from app.api.v1.router import api_router
 
+# Register all models so create_all picks them up
+import app.models.mcp_api_key  # noqa: F401
+import app.models.user_connector_credential  # noqa: F401
+
 log = structlog.get_logger()
 
 

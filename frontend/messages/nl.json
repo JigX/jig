@@ -105,6 +105,18 @@
         "risk": "Risico",
         "policy": "Beleid"
       },
+      "credential": {
+        "title": "Credential",
+        "modeGlobal": "Globaal",
+        "modePerUser": "Per gebruiker",
+        "globalNote": "Deze connector gebruikt een gedeeld serviceaccount dat door de beheerder is ingesteld.",
+        "set": "Persoonlijke credential ingesteld",
+        "notSet": "Geen persoonlijke credential — aanroepen naar deze connector zullen mislukken.",
+        "updated": "Bijgewerkt",
+        "placeholder": "Plak hier je API-token",
+        "delete": "Verwijderen",
+        "deleteConfirm": "Je persoonlijke credential voor deze connector verwijderen?"
+      },
       "form": {
         "name": "Naam",
         "description": "Omschrijving",
@@ -153,6 +165,19 @@
   "settings": {
     "title": "Instellingen",
     "subtitle": "Account- en platformvoorkeuren",
+    "mcp": {
+      "title": "MCP API-sleutels",
+      "description": "Genereer een persoonlijke sleutel om je Claude Code te verbinden met de JIG MCP runtime. Elke sleutel is gekoppeld aan jouw account — JIG past jouw beleid toe en gebruikt jouw connectorcredentials.",
+      "generate": "Nieuwe sleutel",
+      "labelPlaceholder": "bijv. Mijn MacBook",
+      "keyGenerated": "Sleutel aangemaakt — kopieer hem nu, hij wordt niet opnieuw getoond.",
+      "keyOnce": "⚠ Bewaar deze sleutel veilig. Je kunt hem niet meer ophalen.",
+      "empty": "Nog geen sleutels. Genereer er één om Claude Code te verbinden.",
+      "created": "Aangemaakt",
+      "lastUsed": "Laatst gebruikt",
+      "revokeConfirm": "Deze sleutel intrekken? Claude Code verliest direct toegang.",
+      "claudeConfig": "Voeg toe aan ~/.claude.json:"
+    },
     "language": {
       "title": "Taal",
       "description": "Kies de weergavetaal voor de interface",

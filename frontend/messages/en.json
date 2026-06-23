@@ -105,6 +105,18 @@
         "risk": "Risk",
         "policy": "Policy"
       },
+      "credential": {
+        "title": "Credential",
+        "modeGlobal": "Global",
+        "modePerUser": "Per user",
+        "globalNote": "This connector uses a shared service account credential configured by the admin.",
+        "set": "Personal credential configured",
+        "notSet": "No personal credential set — calls to this connector will fail.",
+        "updated": "Updated",
+        "placeholder": "Paste your API token here",
+        "delete": "Remove",
+        "deleteConfirm": "Remove your personal credential for this connector?"
+      },
       "form": {
         "name": "Name",
         "description": "Description",
@@ -153,6 +165,19 @@
   "settings": {
     "title": "Settings",
     "subtitle": "Account and platform preferences",
+    "mcp": {
+      "title": "MCP API Keys",
+      "description": "Generate a personal key to authenticate your Claude Code instance with the JIG MCP runtime. Each key is tied to your account — JIG will apply your policies and use your connector credentials.",
+      "generate": "New key",
+      "labelPlaceholder": "e.g. My MacBook",
+      "keyGenerated": "Key generated — copy it now, it will not be shown again.",
+      "keyOnce": "⚠ Store this key securely. You cannot view it again.",
+      "empty": "No keys yet. Generate one to connect Claude Code.",
+      "created": "Created",
+      "lastUsed": "Last used",
+      "revokeConfirm": "Revoke this key? Claude Code will immediately lose access.",
+      "claudeConfig": "Add to ~/.claude.json:"
+    },
     "language": {
       "title": "Language",
       "description": "Choose the display language for the interface",

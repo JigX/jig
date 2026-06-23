@@ -15,6 +15,11 @@ class ConnectorType(str, enum.Enum):
     graphql = "graphql"   # GraphQL endpoint
 
 
+class ConnectorAuthMode(str, enum.Enum):
+    global_ = "global"      # Use connector-level service account credential (env var)
+    per_user = "per_user"   # Each caller must have their own credential stored in JIG
+
+
 class ConnectorStatus(str, enum.Enum):
     pending = "pending"
     analyzing = "analyzing"
@@ -31,6 +36,12 @@ class Connector(Base):
     type: Mapped[ConnectorType] = mapped_column(Enum(ConnectorType), nullable=False)
     status: Mapped[ConnectorStatus] = mapped_column(
         Enum(ConnectorStatus), default=ConnectorStatus.pending
+    )
+
+    # global = one service-account credential for all users
+    # per_user = each caller supplies their own credential (stored in UserConnectorCredential)
+    auth_mode: Mapped[ConnectorAuthMode] = mapped_column(
+        Enum(ConnectorAuthMode), default=ConnectorAuthMode.global_
     )
 
     # Type-specific config: endpoint URL, SSH host/user, MCP URL, etc.

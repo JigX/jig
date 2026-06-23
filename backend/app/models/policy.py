@@ -2,7 +2,7 @@ import uuid
 import enum
 from datetime import datetime
 
-from sqlalchemy import JSON, Boolean, DateTime, Enum, ForeignKey, Integer, func
+from sqlalchemy import JSON, Boolean, DateTime, Enum, ForeignKey, Integer, UniqueConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
@@ -15,12 +15,24 @@ class PolicyTier(str, enum.Enum):
 
 
 class Policy(Base):
-    """Permission rule for a single capability."""
+    """Permission rule for a capability.
+
+    user_id = NULL  → global policy (applies to all users without a personal override)
+    user_id = <id>  → per-user override (takes precedence over the global policy)
+    """
     __tablename__ = "policies"
+    __table_args__ = (
+        UniqueConstraint("capability_id", "user_id", name="uq_policy_capability_user"),
+    )
 
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
     capability_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("capabilities.id"), nullable=False, unique=True
+        ForeignKey("capabilities.id"), nullable=False
+    )
+
+    # NULL = global; set = per-user override
+    user_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=True, index=True
     )
 
     tier: Mapped[PolicyTier] = mapped_column(Enum(PolicyTier), default=PolicyTier.confirm)
