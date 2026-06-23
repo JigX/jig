@@ -12,9 +12,10 @@ from typing import Any
 
 from mcp.server.fastmcp import FastMCP
 
-from app.models.audit import AuditLog
 from app.models.capability import Capability
+from app.models.connector import Connector
 from app.models.policy import Policy, PolicyTier
+from app.services.mcp_runtime.executor import execute_capability
 
 
 class PolicyViolation(Exception):
@@ -28,19 +29,19 @@ class ConfirmationRequired(Exception):
 
 
 def build_mcp_server(
-    connector_name: str,
+    connector: Connector,
     capabilities: list[tuple[Capability, Policy]],
 ) -> FastMCP:
     """Build and return a FastMCP server for the given connector + policies."""
-    mcp = FastMCP(f"JIG:{connector_name}")
+    mcp = FastMCP(f"JIG:{connector.name}")
 
     for capability, policy in capabilities:
-        _register_tool(mcp, capability, policy)
+        _register_tool(mcp, connector, capability, policy)
 
     return mcp
 
 
-def _register_tool(mcp: FastMCP, capability: Capability, policy: Policy) -> None:
+def _register_tool(mcp: FastMCP, connector: Connector, capability: Capability, policy: Policy) -> None:
     cap_name = capability.name
     cap_desc = capability.description or cap_name
     tier = policy.tier
@@ -67,15 +68,8 @@ def _register_tool(mcp: FastMCP, capability: Capability, policy: Policy) -> None
             del pending[token]
 
         # tier == allow or confirmed → execute
-        return await _execute_capability(capability, kwargs)
+        return await execute_capability(connector, capability, kwargs)
 
     # Register with MCP — tool name must be a valid identifier
-    safe_name = cap_name.replace(" ", "_").replace("-", "_").lower()
+    safe_name = cap_name.replace(" ", "_").replace("-", "_").replace(".", "_").lower()
     mcp.tool(name=safe_name, description=cap_desc)(tool_handler)
-
-
-async def _execute_capability(capability: Capability, params: dict[str, Any]) -> str:
-    """Execute the actual capability. Dispatches per connector type."""
-    # TODO: implement per ConnectorType
-    # This is a stub — real implementation calls the connector (SSH, HTTP, MCP proxy)
-    return f"[JIG] Capability '{capability.name}' uitgevoerd met params: {params}"

@@ -33,6 +33,9 @@ class Settings(BaseSettings):
     azure_openai_deployment: str = "gpt-4o"
     azure_openai_api_version: str = "2024-12-01-preview"
 
+    # MCP Runtime API key — set MCP_API_KEY env var to enable the /mcp endpoint
+    mcp_api_key: str = ""
+
     # CORS — comma-separated origins
     cors_origins: str = "http://localhost:3000"
 
