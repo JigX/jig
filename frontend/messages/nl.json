@@ -96,6 +96,23 @@
     "detail": {
       "config": "Configuratie",
       "status": "Status",
+      "capabilities": "Capabilities",
+      "addCapability": "Capability toevoegen",
+      "noCapabilities": "Nog geen capabilities. Voeg er één toe om hem via de MCP runtime beschikbaar te maken.",
+      "table": {
+        "capability": "Capability",
+        "operation": "Operatie",
+        "risk": "Risico",
+        "policy": "Beleid"
+      },
+      "form": {
+        "name": "Naam",
+        "description": "Omschrijving",
+        "operationType": "Operatietype",
+        "riskLevel": "Risiconiveau",
+        "parameters": "Parameters",
+        "error": "Kan capability niet toevoegen."
+      },
       "delete": "Connector verwijderen",
       "deleteConfirm": "Weet je zeker dat je deze connector wilt verwijderen?",
       "deleting": "Verwijderen...",

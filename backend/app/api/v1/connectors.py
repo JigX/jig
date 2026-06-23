@@ -89,6 +89,114 @@ async def delete_connector(
     await db.commit()
 
 
+@router.get("/{connector_id}/capabilities/")
+async def list_capabilities(
+    connector_id: uuid.UUID,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    _: Annotated[User, Depends(get_current_user)],
+) -> list[dict]:
+    from app.models.capability import Capability
+    from app.models.policy import Policy
+    result = await db.execute(
+        select(Capability, Policy)
+        .outerjoin(Policy, Policy.capability_id == Capability.id)
+        .where(Capability.connector_id == connector_id)
+        .order_by(Capability.created_at)
+    )
+    rows = result.all()
+    return [
+        {
+            "id": str(cap.id),
+            "name": cap.name,
+            "description": cap.description,
+            "operation_type": cap.operation_type.value,
+            "risk_level": cap.risk_level.value,
+            "parameters_schema": cap.parameters_schema,
+            "policy_id": str(pol.id) if pol else None,
+            "policy_tier": pol.tier.value if pol else None,
+        }
+        for cap, pol in rows
+    ]
+
+
+@router.post("/{connector_id}/capabilities/", status_code=status.HTTP_201_CREATED)
+async def create_capability(
+    connector_id: uuid.UUID,
+    body: dict,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    _: Annotated[User, Depends(get_current_user)],
+) -> dict:
+    from app.models.capability import Capability, OperationType, RiskLevel, SensitivityLevel
+    from app.models.policy import Policy, PolicyTier
+
+    result = await db.execute(
+        select(Connector).where(Connector.id == connector_id)
+    )
+    if not result.scalar_one_or_none():
+        raise HTTPException(status_code=404, detail="Connector not found")
+
+    # Build parameters_schema: _http meta + user params
+    http_method = body.get("http_method", "POST").upper()
+    http_path = body.get("http_path", "/")
+    raw_params: list[dict] = body.get("parameters", [])
+
+    parameters_schema: dict = {
+        "_http": {"method": http_method, "path": http_path}
+    }
+    for p in raw_params:
+        parameters_schema[p["name"]] = {
+            "type": p.get("type", "string"),
+            "description": p.get("description", ""),
+        }
+
+    cap = Capability(
+        connector_id=connector_id,
+        name=body["name"],
+        description=body.get("description"),
+        operation_type=OperationType(body.get("operation_type", "read")),
+        sensitivity=SensitivityLevel(body.get("sensitivity", "internal")),
+        risk_level=RiskLevel(body.get("risk_level", "medium")),
+        parameters_schema=parameters_schema,
+    )
+    db.add(cap)
+    await db.flush()
+
+    tier = PolicyTier(body.get("policy_tier", "deny"))
+    policy = Policy(capability_id=cap.id, tier=tier)
+    db.add(policy)
+    await db.commit()
+    await db.refresh(cap)
+    await db.refresh(policy)
+
+    return {
+        "id": str(cap.id),
+        "name": cap.name,
+        "policy_id": str(policy.id),
+        "policy_tier": policy.tier.value,
+    }
+
+
+@router.delete("/{connector_id}/capabilities/{capability_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_capability(
+    connector_id: uuid.UUID,
+    capability_id: uuid.UUID,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    _: Annotated[User, Depends(get_current_user)],
+) -> None:
+    from app.models.capability import Capability
+    result = await db.execute(
+        select(Capability).where(
+            Capability.id == capability_id,
+            Capability.connector_id == connector_id,
+        )
+    )
+    cap = result.scalar_one_or_none()
+    if not cap:
+        raise HTTPException(status_code=404, detail="Capability not found")
+    await db.delete(cap)
+    await db.commit()
+
+
 async def _run_analysis(connector_id: uuid.UUID) -> None:
     """Background task: discover capabilities and run compliance analysis."""
     from app.core.database import AsyncSessionLocal

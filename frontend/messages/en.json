@@ -96,6 +96,23 @@
     "detail": {
       "config": "Configuration",
       "status": "Status",
+      "capabilities": "Capabilities",
+      "addCapability": "Add capability",
+      "noCapabilities": "No capabilities yet. Add one to expose it via the MCP runtime.",
+      "table": {
+        "capability": "Capability",
+        "operation": "Operation",
+        "risk": "Risk",
+        "policy": "Policy"
+      },
+      "form": {
+        "name": "Name",
+        "description": "Description",
+        "operationType": "Operation type",
+        "riskLevel": "Risk level",
+        "parameters": "Parameters",
+        "error": "Failed to add capability."
+      },
       "delete": "Delete connector",
       "deleteConfirm": "Are you sure you want to delete this connector?",
       "deleting": "Deleting...",
