@@ -33,6 +33,15 @@ class Settings(BaseSettings):
     azure_openai_deployment: str = "gpt-4o"
     azure_openai_api_version: str = "2024-12-01-preview"
 
+    # Authentik OIDC (leave empty to disable)
+    authentik_base_url: str = ""           # e.g. https://auth.indeweygerlings.com
+    authentik_client_id: str = ""
+    authentik_client_secret: str = ""
+    authentik_app_slug: str = "jig-staging"
+
+    # Frontend base URL — used for OAuth redirect after callback
+    frontend_base_url: str = "http://localhost:3000"
+
     # MCP Runtime API key — set MCP_API_KEY env var to enable the /mcp endpoint
     mcp_api_key: str = ""
 

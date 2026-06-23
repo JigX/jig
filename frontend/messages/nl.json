@@ -18,7 +18,8 @@
     "submitting": "Bezig...",
     "invalidCredentials": "Ongeldig e-mailadres of wachtwoord",
     "networkError": "Verbindingsfout. Probeer opnieuw.",
-    "noAccount": "Geen account? Vraag toegang aan bij de beheerder."
+    "noAccount": "Geen account? Vraag toegang aan bij de beheerder.",
+    "authentikLogin": "Inloggen met Authentik"
   },
   "dashboard": {
     "title": "Dashboard",

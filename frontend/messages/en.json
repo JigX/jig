@@ -18,7 +18,8 @@
     "submitting": "Signing in...",
     "invalidCredentials": "Invalid email address or password",
     "networkError": "Connection error. Please try again.",
-    "noAccount": "No account? Contact your administrator."
+    "noAccount": "No account? Contact your administrator.",
+    "authentikLogin": "Sign in with Authentik"
   },
   "dashboard": {
     "title": "Dashboard",

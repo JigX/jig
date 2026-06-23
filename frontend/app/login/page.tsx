@@ -116,6 +116,24 @@ export default function LoginPage() {
           </form>
         </div>
 
+        <div className="mt-4">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="flex-1 h-px" style={{ background: "var(--border)" }} />
+            <span className="text-xs" style={{ color: "var(--text-muted)" }}>or</span>
+            <div className="flex-1 h-px" style={{ background: "var(--border)" }} />
+          </div>
+          <a
+            href="/api/v1/auth/login/authentik"
+            className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-sm font-medium text-white transition-colors border"
+            style={{ background: "var(--surface-raised)", borderColor: "var(--border)" }}
+          >
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+            </svg>
+            {t("authentikLogin")}
+          </a>
+        </div>
+
         <p className="text-center text-xs mt-6" style={{ color: "var(--text-muted)" }}>
           {t("noAccount")}
         </p>
