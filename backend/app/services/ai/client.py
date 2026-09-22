@@ -1,4 +1,4 @@
-"""Abstract AI client — same interface for Ollama and Azure OpenAI."""
+"""Abstract AI client — same interface for every provider."""
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
@@ -32,7 +32,10 @@ class AIClient(ABC):
 def get_ai_client() -> AIClient:
     from app.core.config import settings
 
-    if settings.ai_provider == "ollama":
+    if settings.ai_provider == "openai_compatible":
+        from app.services.ai.openai_compatible import OpenAICompatibleClient
+        return OpenAICompatibleClient()
+    elif settings.ai_provider == "ollama":
         from app.services.ai.ollama import OllamaClient
         return OllamaClient()
     elif settings.ai_provider == "azure_openai":

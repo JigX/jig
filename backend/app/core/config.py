@@ -20,12 +20,17 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 480  # 8 hours
     algorithm: str = "HS256"
 
-    # AI engine — one of: "ollama" | "azure_openai"
-    ai_provider: str = "ollama"
+    # AI engine — one of: "openai_compatible" | "azure_openai" | "ollama"
+    ai_provider: str = "openai_compatible"
 
     # Ollama
     ollama_base_url: str = "http://localhost:11434"
     ollama_model: str = "llama3.2:3b"
+
+    # OpenAI-compatible server (vLLM, llama.cpp, LiteLLM)
+    openai_base_url: str = "http://localhost:8000/v1"
+    openai_api_key: str = ""
+    openai_model: str = ""
 
     # Azure OpenAI
     azure_openai_endpoint: str = ""
